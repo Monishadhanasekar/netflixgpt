@@ -3,14 +3,13 @@ import Header from './Header';
 import { checkValidData } from '../utils/validate';
 import { auth } from '../utils/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { BACK_IMAGE } from '../utils/constants';
 
 const Login = () => {
 	const [ issigninForm, setIsSigninForm ] = useState(true);
 	const [ message, setMessage ] = useState(null);
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const name = useRef(null);
 	const email = useRef(null);
@@ -19,14 +18,12 @@ const Login = () => {
 	const handleButtonClick = () => {
 		const message = checkValidData(email.current.value, password.current.value);
 		setMessage(message);
-		console.log(message);
 		if (message) return;
 
 		if (!issigninForm) {
 			//signup logic
 			createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
 				.then((userCredential) => {
-					// Signed up
 					const user = userCredential.user;
 					updateProfile(user, {
 						displayName: name.current.value
@@ -40,12 +37,10 @@ const Login = () => {
 									displayName: displayName
 								})
 							);
-							navigate('/browse');
 						})
 						.catch((error) => {
 							setMessage(error.message);
 						});
-					console.log(user);
 				})
 				.catch((error) => {
 					const errorCode = error.code;
@@ -56,11 +51,7 @@ const Login = () => {
 			//signin logic
 			signInWithEmailAndPassword(auth, email.current.value, password.current.value)
 				.then((userCredential) => {
-					// Signed in
 					const user = userCredential.user;
-					navigate('/browse');
-					console.log(user);
-					// ...
 				})
 				.catch((error) => {
 					const errorCode = error.code;
@@ -78,11 +69,7 @@ const Login = () => {
 		<div>
 			<Header />
 			<div className="relative w-screen h-screen">
-				<img
-					src="https://assets.nflxext.com/ffe/siteui/vlv3/9db4a880-3034-4e98-bdea-5d983e86bf52/b5953637-091d-4e02-9754-2bfadc8a8f7c/IN-en-20230925-popsignuptwoweeks-perspective_alpha_website_large.jpg"
-					alt="logo"
-					className="absolute top-0 left-0 w-full h-full object-cover"
-				/>
+				<img src={BACK_IMAGE} alt="logo" className="absolute top-0 left-0 w-full h-full object-cover" />
 				<div className="absolute inset-0 flex items-center justify-center z-10">
 					<form
 						onSubmit={(e) => e.preventDefault()}
