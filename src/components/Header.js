@@ -8,6 +8,7 @@ import { addUser, removeUser } from '../utils/userSlice';
 import { LOGO, SUPPORTED_LANGUAGES } from '../utils/constants';
 import { toggleGptSearchView } from '../utils/gptSlice';
 import { changeLanguage } from '../utils/configSlice';
+import { addGptMovieResult } from '../utils/gptSlice';
 
 const Header = () => {
 	console.log('supportedlang', SUPPORTED_LANGUAGES);
@@ -37,6 +38,11 @@ const Header = () => {
 	}, []);
 
 	const handleGptSearchClick = () => {
+		// Check if you are switching from GPT search to Home page
+		if (showGptSearch) {
+			// Dispatch the action with empty data to clear the GPT search results
+			dispatch(addGptMovieResult({ movieNames: null, movieResults: null }));
+		}
 		dispatch(toggleGptSearchView());
 	};
 

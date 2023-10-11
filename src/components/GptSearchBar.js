@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import lang from '../utils/languageConstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import openai from '../utils/openai';
 import { API_OPTIONS } from '../utils/constants';
 import { addGptMovieResult } from '../utils/gptSlice';
+import { toggleLoading } from '../utils/gptSlice';
 
 const GptSearchBar = () => {
     const dispatch = useDispatch();
 	const langKey = useSelector((store) => store.config.lang);
 	console.log('langkey', langKey);
 	const searchText = useRef();
+    const [isLoading, setIsLoading] = useState(false);
 
     //search movie in TMDB
 
@@ -22,6 +24,7 @@ const GptSearchBar = () => {
 
 	const handleGptSearchClick = async () => {
 		console.log(searchText.current.value);
+        dispatch(toggleLoading(true));
 
 		const gptQuery =
 			'Act as a Movie Recommendation system and suggest some movies fo the query:' +
@@ -46,6 +49,7 @@ const GptSearchBar = () => {
         const tmdbResults = await Promise.all(promiseArray);
         console.log("tmdbResults", tmdbResults);
         dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbResults}));
+        dispatch(toggleLoading(false));
 	};
 	return (
 		<div className="pt-[50%] md:pt-[10%] flex justify-center">
@@ -62,7 +66,7 @@ const GptSearchBar = () => {
 				>
 					{lang[langKey].search}
 				</button>
-			</form>
+			</form> 
 		</div>
 	);
 };
