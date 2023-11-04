@@ -14,7 +14,8 @@ export const API_OPTIONS = {
 
 export const IMG_CDN_URL = 'https://image.tmdb.org/t/p/w500/';
 
-export const OPENAI_GPT_KEY = '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';
+//export const OPENAI_GPT_KEY = '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';
+export const OPENAI_GPT_KEY = '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';
 
 export const SUPPORTED_LANGUAGES = [
 	{ identifier: 'en', name: 'English' },
