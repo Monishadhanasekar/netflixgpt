@@ -8,14 +8,14 @@ export const API_OPTIONS = {
 	headers: {
 		accept: 'application/json',
 		Authorization:
-			'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjVjNzMyMzVlMmMyNzcwOTQ3ZTFiYjljYTE3Mzc2YSIsInN1YiI6IjY1MWJjZjVkNjcyOGE4MDEzYzQxNzQ0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WnIud2DvE2Qvo8zttd2sOs_f_CDqmCsXZ5EBIn6oilY'
+			'Bearer '+ process.env.REACT_APP_TMDB_KEY
 	}
 };
 
 export const IMG_CDN_URL = 'https://image.tmdb.org/t/p/w500/';
 
 //export const OPENAI_GPT_KEY = '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';
-export const OPENAI_GPT_KEY = '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';
+export const OPENAI_GPT_KEY = process.env.REACT_APP_OPENAI_GPI_KEY;
 
 export const SUPPORTED_LANGUAGES = [
 	{ identifier: 'en', name: 'English' },
